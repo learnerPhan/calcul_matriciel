@@ -1,6 +1,5 @@
 #include <iostream>
-#include "matrice.hpp"
-#include "vecteur.hpp"
+#include "PLUdecompo.hpp"
 
 using namespace std;
 
@@ -61,10 +60,10 @@ int main ()
 	y(1) = 3;
 	y(2) = 6;
 	Vecteur x(3);
-	x = inv_triang_inf (M,y);
-	cout << M;
-	cout << y;
-	cout << x;
+	//x = inv_triang_inf (M,y);
+	//cout << M;
+	//cout << y;
+	//cout << x;
 	Matrice N(3);
 	N(0,0) = N(1,1) = N(2,2) = 1.;
 	N(0,1) = N(1,2) = 2.;
@@ -72,9 +71,37 @@ int main ()
 	y(0) = 6;
 	y(1) = 3;
 	y(2) = 1;
-	x = inv_triang_sup (N,y);
+	//x = inv_triang_sup (N,y);
 	cout << N;
 	cout << y;
 	cout << x;
+
+	vector<double> n = {1., 2., 3., 4.};
+	Matrice P(2, n);
+	cout << P;
+
+	Matrice Q(N);
+	cout << Q;
+
+	Q = M;
+	cout << Q;
+	cout << M;
+
+	IdentityMatrice I(5);
+	cout << I;
+
+	Matrice X (3, {1., 0., 4., 0., 0., 1., 3., 2., 13.});
+	PLUdecompo testplu(X);
+	testplu.decompoPLU();	
+	Matrice Y(3);
+	Matrice J(3);
+	Matrice K(3);
+	Y = testplu.getP();
+	J = testplu.getL();
+	K = testplu.getU();
+	cout << X;
+	cout << Y;
+	cout << J;
+	cout << K;
 	return 0;
 }

@@ -1,11 +1,12 @@
 CXX = g++
-CFLAGS = -c -g -Wall
+CFLAGS = -std=c++11 -c -g -Wall
 LDFLAGS =
 
 EXEC = main
-SRC =  main.cpp matrice.cpp vecteur.cpp
-OBJS = main.o matrice.o vecteur.o
-#OBJS = $(SRC:.cpp=.o)
+SRC =  main.cpp matrice.cpp vecteur.cpp identityMatrice.cpp PLUdecompo.cpp
+
+#OBJS = main.o matrice.o vecteur.o identityMatrice.o calcul_matrice.o
+OBJS = $(SRC:.cpp=.o)
 
 all : $(EXEC)
 

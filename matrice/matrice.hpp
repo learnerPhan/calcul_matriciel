@@ -3,7 +3,9 @@
 
 #include <iostream>
 #include <vector>
-#include "vecteur.hpp"
+
+// forward declaration (for operation *)
+class Vecteur;
 
 class Matrice
 {
@@ -15,8 +17,26 @@ class Matrice
 		// zéros
 		Matrice (std::size_t t_taille); 
 
+		// constructeur prenant un entier comme dimension et un vecteur
+		Matrice (std::size_t t_taille, const std::vector<double>& t_donnees);
+
 		// constructeur par recopie
-		Matrice (const Matrice& t_M);
+		//Matrice (const Matrice& t_M);
+		Matrice (const Matrice& t_M): m_taille(t_M.m_taille) {m_donnees = t_M.m_donnees;};
+
+		// destructeur
+		~Matrice() {};
+
+		// fonction swap qui sert à operation assignement
+		friend void swap (Matrice& lune, Matrice& lautre);
+
+		// operation assignment
+		inline Matrice& operator= (Matrice lautre)
+		{
+			swap (*this, lautre);
+			return *this;
+		}
+		
 
 		// méthode constante et inline qui renvoie la taille de la matrice
 		inline std::size_t getTaille () const {return m_taille;};
@@ -52,12 +72,13 @@ class Matrice
 
 		// multiplication avec un vecteur
 		friend Vecteur operator* (const Matrice& mat, const Vecteur& vect);
-	private:
+
+		// transposer la matrice
+		Matrice& transposer();
+	protected:
 		std::size_t m_taille;
 		std::vector<double> m_donnees;
 };
 
-Vecteur inv_triang_inf (const Matrice& M, const Vecteur& y);
-Vecteur inv_triang_sup (const Matrice& M, const Vecteur& y);
 
 #endif

@@ -1,24 +1,34 @@
 #include "matrice.hpp"
+#include "vecteur.hpp"
 
 using namespace std;
 
+// constructeur prenant un entier et initialise a matrice zero
 Matrice::Matrice (size_t t_taille)
+	: m_taille (t_taille)
 {
-	m_taille = t_taille;
 	for (size_t i = 0; i < m_taille*m_taille; ++i)
 	{
 		m_donnees.push_back(0.);
 	}
 }
 
-// constructeur par recopie
-Matrice::Matrice (const Matrice& t_M)
+// constructeur prenant un vecteur
+Matrice::Matrice (size_t t_taille, const vector<double>& t_donnees)
+	: m_taille (t_taille)
 {
-	m_taille = t_M.m_taille;
-	for (size_t i = 0; i < t_M.m_taille*t_M.m_taille; ++i)
+	for (size_t i = 0; i < t_donnees.size(); ++i)
 	{
-		m_donnees.push_back(t_M.m_donnees[i]);
+		m_donnees.push_back(t_donnees[i]);
 	}
+}
+
+// fonction swap
+void swap (Matrice& lune, Matrice& lautre)
+{
+	using std::swap;
+	swap (lune.m_taille, lautre.m_taille);
+	swap (lune.m_donnees, lautre.m_donnees);
 }
 
 ostream& operator<< (ostream& t_os, const Matrice& t_M)
@@ -60,47 +70,16 @@ Vecteur operator* (const Matrice& mat, const Vecteur& vect)
 	}
 	return v;
 }
-/* paramètres:
-* M : matrice triangulaire inférieur
-* y : vecteur
-* renvoie : inv(M)*y
-* Pour cela, il suffit de résoudre M*x = y, on obtenira x = inv(M)*y
-*/
-Vecteur inv_triang_inf (const Matrice& M, const Vecteur& y)
-{
-	Vecteur x(y.getTaille());
-	double tmp = 0.;
-	for (size_t i = 0; i < M.getTaille(); ++i)
-	{
-		x(i) = (y(i) - tmp)/M(i,i);
-		tmp = 0.;
-		for (size_t j = 0; j < i+1; ++j)
-		{
-			tmp += M(i+1,j)*x(j);
-		} 
-	}
-	return x;
-}
 
-/* paramètres:
-* M : matrice triangulaire supérieur
-* y : vecteur
-* renvoie : inv(M)*y
-* Pour cela, il suffit de résoudre M*x = y, on obtenira x = inv(M)*y
-*/
-Vecteur inv_triang_sup (const Matrice& M, const Vecteur& y)
+Matrice& Matrice::transposer()
 {
-	Vecteur x(y.getTaille());
-	double tmp = 0.;
-	for (size_t i = y.getTaille() - 1; (int)i > -1; --i)
+	Matrice tmp(*this);
+	for (size_t i = 0; i < m_taille; ++i)
 	{
-		x(i) = (y(i) - tmp)/M(i,i);
-		tmp = 0.;
-		for (size_t j = y.getTaille() - 1; j > i-1; --j)
+		for (size_t j = 0; j < m_taille; ++j)
 		{
-			tmp += M(i-1,j)*x(j);
-		} 
+			(*this)(i,j) = tmp(j,i);
+		}
 	}
-	return x;
-
+	return *this;
 }

@@ -3,8 +3,8 @@
 using namespace std;
 
 Vecteur::Vecteur (size_t t_taille)
+	:m_taille (t_taille)
 {
-	m_taille = t_taille;
 	for (size_t i = 0; i < m_taille; ++i)
 	{
 		m_donnees.push_back(0.);
@@ -12,8 +12,8 @@ Vecteur::Vecteur (size_t t_taille)
 }
 
 Vecteur::Vecteur (const Vecteur& vect)
+	:m_taille (vect.m_taille)
 {
-	m_taille = vect.m_taille;
 	for (size_t i = 0; i < m_taille; ++i)
 	{
 		m_donnees.push_back (vect.m_donnees[i]);
