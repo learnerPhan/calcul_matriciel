@@ -1,3 +1,13 @@
+/*
+* This is an implementation for PLU algo, which is based on lecteur https://ece.uwaterloo.ca/~dwharder/NumericalAnalysis/04LinearAlgebra/lup/
+* For solving Ax = b, we want to find P, L, U such that PA=LU
+* then PAx = Pb = LUx
+* we calcul y = Pb
+* we solve Lz = y
+* we solve Ux = z.
+* The test is based on http://www.math.pitt.edu/~sussmanm/2071/lab06/index.html
+*/
+
 #include "PLUdecompo.hpp"
 
 #define ABS(x) (x > 0 ? x : -x)
@@ -91,8 +101,27 @@ int PLUdecompo::decompoPLU()
 	} 
 	 		
 	// P = tranposer P
-	P.transposer();
+	//P.transposer();
 	return 0;	
+}
+
+int PLUdecompo::resolPLU (const Vecteur& b, Vecteur& sol)
+{
+	if (decompoPLU() == -1)
+	{
+		return -1;
+	}
+	Vecteur y (P.getTaille());	
+	// calcul y = Pb
+	y = P*b;
+
+	// resoudre Lz = y
+	sol_triang_inf (L, sol, y);
+	y = sol;
+
+	// resoudre Ux = z
+	sol_triang_sup (U, sol, y);
+	return 0;
 }
 
 #undef ABS

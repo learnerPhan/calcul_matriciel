@@ -1,12 +1,11 @@
 #include <iostream>
 #include "PLUdecompo.hpp"
-
+#include "matrice.hpp"
 using namespace std;
 
 int main ()
 {
 	Matrice A(5);
-	cout << A;
 
 	for (size_t i = 0; i < A.getTaille(); ++i)
 	{
@@ -15,7 +14,6 @@ int main ()
 			A(i,j) = (double)(i*A.getTaille() + j);
 		}
 	}
-	cout << A;
 
 	Matrice B(5);
 	Matrice C(5);
@@ -24,32 +22,23 @@ int main ()
 		B(i,i) = (double)(i*A.getTaille() + i);
 	}
 	C = A + B;
-	cout << A;
-	cout << C;
 
 	Vecteur v(5);
-	cout << v;	
 
 	for (size_t i = 0; i < v.getTaille(); ++i)
 	{
 		v(i) = (double) i;
 	}
-	cout << v;
 
 	Vecteur w(v);
 	Vecteur u(w + v);
-	cout << u;
 
 	u -= v;	
-	cout << u;
 	//u = v - w;
 	//cout << u;
 
 	Vecteur t;
 	t = A * u;
-	cout << A;
-	cout << u;
-	cout << t;
 
 	Matrice M(3);
 	M(0,0) = M(1,0) = M(2,0) = 1.;
@@ -59,11 +48,8 @@ int main ()
 	y(0) = 1;
 	y(1) = 3;
 	y(2) = 6;
-	Vecteur x(3);
-	//x = inv_triang_inf (M,y);
-	//cout << M;
-	//cout << y;
-	//cout << x;
+	//Vecteur x(3);
+	//sol_triang_inf (M, x, y);
 	Matrice N(3);
 	N(0,0) = N(1,1) = N(2,2) = 1.;
 	N(0,1) = N(1,2) = 2.;
@@ -71,28 +57,30 @@ int main ()
 	y(0) = 6;
 	y(1) = 3;
 	y(2) = 1;
-	//x = inv_triang_sup (N,y);
+	Vecteur x(3);
+	sol_triang_sup (N, x, y);
 	cout << N;
 	cout << y;
 	cout << x;
 
 	vector<double> n = {1., 2., 3., 4.};
 	Matrice P(2, n);
-	cout << P;
 
 	Matrice Q(N);
-	cout << Q;
 
 	Q = M;
-	cout << Q;
-	cout << M;
 
 	IdentityMatrice I(5);
-	cout << I;
 
-	Matrice X (3, {1., 0., 4., 0., 0., 1., 3., 2., 13.});
+	//Matrice X (3, {1., 0., 4., 0., 0., 1., 3., 2., 13.});
+	Matrice X (3, {2., 6., 12., 1., 3., 8., 4., 4., 8.});
+	Vecteur h(3);
+	h(0) = 28;
+	h(1) = 18;
+	h(2) = 16;
 	PLUdecompo testplu(X);
-	testplu.decompoPLU();	
+	//testplu.decompoPLU();	
+	testplu.resolPLU(h,x);	
 	Matrice Y(3);
 	Matrice J(3);
 	Matrice K(3);
@@ -103,5 +91,6 @@ int main ()
 	cout << Y;
 	cout << J;
 	cout << K;
+	cout << x;
 	return 0;
 }

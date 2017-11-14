@@ -80,5 +80,9 @@ class Matrice
 		std::vector<double> m_donnees;
 };
 
+// resoudre Lx = y ou L est une matrice triangulaire inferieur
+void sol_triang_inf (Matrice& L, Vecteur& x, Vecteur& y);
 
+// resoudre Ux = y ou U est une matrice triangulaire superieur
+void sol_triang_sup (Matrice& U, Vecteur& x, Vecteur& y);
 #endif

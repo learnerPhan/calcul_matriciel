@@ -3,6 +3,7 @@
 
 #include "matrice.hpp"
 
+class Vecteur;
 class IdentityMatrice : public Matrice
 {
 	public:

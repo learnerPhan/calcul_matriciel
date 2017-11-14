@@ -5,7 +5,7 @@
 #include "vecteur.hpp"
 
 // decomposition PLU.
-// calcul 3 matrices P, L, U telles que A = PLU
+// calcul 3 matrices P, L, U telles que PA = PLU
 // revoie 0 if matrice has PLU decomposition; -1 sinon
 class PLUdecompo
 {
@@ -14,7 +14,8 @@ class PLUdecompo
 		inline Matrice getP() const {return P;} 
 		inline Matrice getL() const {return L;} 
 		inline Matrice getU() const {return U;}
-		int decompoPLU(); 
+		int decompoPLU();
+		int resolPLU(const Vecteur& b, Vecteur& sol); 
 	private:
 		Matrice P;
 		Matrice L;

@@ -83,3 +83,34 @@ Matrice& Matrice::transposer()
 	}
 	return *this;
 }
+
+// resoudre Lx = y ou L est une matrice triangulaire inferieur
+void sol_triang_inf (Matrice& L, Vecteur& x, Vecteur& y)
+{
+	double tmp = 0.;
+	for (size_t i = 0; i < L.getTaille(); ++i)
+	{
+		x(i) = (y(i) - tmp) / L(i,i);
+		tmp = 0.;
+		for (size_t j = 0; j < i+1; ++j)
+		{
+			tmp += L(i+1,j)*x(j);
+		} 
+	}
+}
+
+// resoudre Ux = y ou U est une matrice triangulaire superieur
+void sol_triang_sup (Matrice& U, Vecteur& x, Vecteur& y)
+{
+	double tmp = 0.;
+	size_t dernier = x.getTaille() -1;
+	for (size_t i = 0; i < x.getTaille(); ++i)
+	{
+		x(dernier -i) = (y(dernier -i) - tmp) / U(dernier -i,dernier -i);
+		tmp = 0.;
+		for (size_t j = 0; j < i+1; ++j)
+		{
+			tmp += U(dernier-(i+1),dernier-j)*x(dernier-j);
+		} 
+	}
+}
