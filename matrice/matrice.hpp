@@ -1,5 +1,5 @@
-#ifndef MATRICE_HPP
-#define MATRICE_HPP
+#ifndef MATRICE_H
+#define MATRICE_H
 
 #include <iostream>
 #include <vector>

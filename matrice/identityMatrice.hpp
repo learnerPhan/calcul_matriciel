@@ -1,5 +1,5 @@
-#ifndef IDENTITYMATRICE_HPP
-#define IDENTITYMATRICE_HPP
+#ifndef IDENTITYMATRICE_H
+#define IDENTITYMATRICE_H
 
 #include "matrice.hpp"
 

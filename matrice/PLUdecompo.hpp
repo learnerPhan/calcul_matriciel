@@ -1,5 +1,5 @@
-#ifndef PLUDECOMPO_HPP
-#define PLUDECOMPO_HPP
+#ifndef PLUDECOMPO_H
+#define PLUDECOMPO_H
 
 #include "identityMatrice.hpp"
 #include "vecteur.hpp"
